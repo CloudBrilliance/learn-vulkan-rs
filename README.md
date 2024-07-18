@@ -15,3 +15,7 @@ Presentation
 - demo_04: Window surface and swapchain
 
 - demo_05: Image views
+
+Pipeline
+
+- demo_06: Shader modules
