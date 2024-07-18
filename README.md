@@ -23,3 +23,5 @@ Pipeline
 - demo_07: Fixed functions
 
 - demo_08: Render passes
+
+- demo_09: Pipeline
