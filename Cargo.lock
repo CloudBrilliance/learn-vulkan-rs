@@ -314,6 +314,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "demo_05"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "pretty_env_logger",
+ "thiserror",
+ "vulkanalia",
+ "winit",
+]
+
+[[package]]
 name = "dispatch"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -326,18 +338,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "330c60081dcc4c72131f8eb70510f1ac07223e5d4163db481a04a0befcffa412"
 dependencies = [
  "libloading 0.8.4",
-]
-
-[[package]]
-name = "dome_05"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "log",
- "pretty_env_logger",
- "thiserror",
- "vulkanalia",
- "winit",
 ]
 
 [[package]]
