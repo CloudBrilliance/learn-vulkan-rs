@@ -19,3 +19,5 @@ Presentation
 Pipeline
 
 - demo_06: Shader modules
+
+- demo_07: Fixed functions
