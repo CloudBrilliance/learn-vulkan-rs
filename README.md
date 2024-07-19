@@ -31,3 +31,5 @@ Drawing
 - demo_10: Framebuffers
 
 - demo_11: Command buffers
+
+- demo_12: Rendering and presentation (triangle)
