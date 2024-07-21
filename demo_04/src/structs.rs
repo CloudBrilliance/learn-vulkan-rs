@@ -25,6 +25,7 @@ impl QueueFamilyIndices {
             .position(|p| p.queue_flags.contains(vk::QueueFlags::GRAPHICS))
             .map(|i| i as u32);
 
+        // query presentation support
         let mut present = None;
         for (index, properties) in properties.iter().enumerate() {
             if instance.get_physical_device_surface_support_khr(
@@ -47,9 +48,9 @@ impl QueueFamilyIndices {
 
 #[derive(Clone, Debug)]
 pub struct SwapchainSupport {
-    pub capabilities:  vk::SurfaceCapabilitiesKHR,
-    pub formats:       Vec<vk::SurfaceFormatKHR>,
-    pub present_modes: Vec<vk::PresentModeKHR>,
+    pub capabilities:  vk::SurfaceCapabilitiesKHR,  // basic surface capabilities
+    pub formats:       Vec<vk::SurfaceFormatKHR>,   // surface format (pixel format, color space)
+    pub present_modes: Vec<vk::PresentModeKHR>,     // available present modes
 }
 
 impl SwapchainSupport {
@@ -59,15 +60,12 @@ impl SwapchainSupport {
         physical_device: vk::PhysicalDevice,
     ) -> Result<Self> {
         Ok(Self {
-            capabilities: instance
-                .get_physical_device_surface_capabilities_khr(
-                    physical_device, data.surface)?,
-            formats: instance
-                .get_physical_device_surface_formats_khr(
-                    physical_device, data.surface)?,
-            present_modes: instance
-                .get_physical_device_surface_present_modes_khr(
-                    physical_device, data.surface)?,
+            capabilities: instance.get_physical_device_surface_capabilities_khr(
+                physical_device, data.surface)?,
+            formats: instance.get_physical_device_surface_formats_khr(
+                physical_device, data.surface)?,
+            present_modes: instance.get_physical_device_surface_present_modes_khr(
+                physical_device, data.surface)?,
         })
     }
 }

@@ -15,6 +15,7 @@ pub unsafe fn create_logical_device(entry: &Entry, instance: &Instance, data: &m
     // Queue Create Infos
     let indices = QueueFamilyIndices::get(instance, data, data.physical_device)?;
 
+    // create graphics/present queue
     let mut unique_indices = HashSet::new();
     unique_indices.insert(indices.graphics);
     unique_indices.insert(indices.present);
@@ -54,7 +55,7 @@ pub unsafe fn create_logical_device(entry: &Entry, instance: &Instance, data: &m
     let info = vk::DeviceCreateInfo::builder()
         .queue_create_infos(&queue_infos)
         .enabled_layer_names(&layers)
-        .enabled_extension_names(&extensions)
+        .enabled_extension_names(&extensions)  // enable device extensions
         .enabled_features(&features);
 
     let device = instance

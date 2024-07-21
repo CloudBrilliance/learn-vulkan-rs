@@ -55,7 +55,9 @@ pub unsafe fn create_render_pass(instance: &Instance, device: &Device, data: &mu
 }
 
 pub unsafe fn create_pipeline(device: &Device, data: &mut AppData) -> Result<()> {
-    // Stages
+    // --------------------------------------------------
+    // Shader -> Shader module -> Shader stage
+    // --------------------------------------------------
     let vert = include_bytes!("../../shaders/06/vert.spv");
     let frag = include_bytes!("../../shaders/06/frag.spv");
 
@@ -72,6 +74,9 @@ pub unsafe fn create_pipeline(device: &Device, data: &mut AppData) -> Result<()>
         .module(frag_shader_module)
         .name(b"main\0");
 
+    // ------------------------------------------------
+    // Fixed functions
+    // ------------------------------------------------
     // Vertex Input State
     let vertex_input_state = vk::PipelineVertexInputStateCreateInfo::builder();
 
@@ -126,12 +131,16 @@ pub unsafe fn create_pipeline(device: &Device, data: &mut AppData) -> Result<()>
         .attachments(attachments)
         .blend_constants([0.0, 0.0, 0.0, 0.0]);
 
-    // Layout
+    // ------------------------------------------------ 
+    // Pipeline Layout
+    // ------------------------------------------------
     let layout_info = vk::PipelineLayoutCreateInfo::builder();
 
     data.pipeline_layout = device.create_pipeline_layout(&layout_info, None)?;
 
+    // ------------------------------------------------ 
     // Create
+    // ------------------------------------------------
     let stages = &[vert_stage, frag_stage];
     let info = vk::GraphicsPipelineCreateInfo::builder()
         .stages(stages)
@@ -149,7 +158,9 @@ pub unsafe fn create_pipeline(device: &Device, data: &mut AppData) -> Result<()>
         .create_graphics_pipelines(vk::PipelineCache::null(), &[info], None)?
         .0[0];
 
+    // ------------------------------------------------ 
     // Cleanup
+    // ------------------------------------------------
     device.destroy_shader_module(vert_shader_module, None);
     device.destroy_shader_module(frag_shader_module, None);
 

@@ -36,9 +36,14 @@ unsafe fn check_physical_device(
     data: &AppData,
     physical_device: vk::PhysicalDevice,
 ) -> Result<()> {
+    // get { graphics, present }
     QueueFamilyIndices::get(instance, data, physical_device)?;
+
+    // check swapchain support
     check_physical_device_extensions(instance, physical_device)?;
 
+    // query details of swapchain support
+    // { capabilities, formats, present_modes }
     let support = SwapchainSupport::get(instance, data, physical_device)?;
     if support.formats.is_empty() || support.present_modes.is_empty() {
         return Err(anyhow!(SuitabilityError("Insufficient swapchain support.")));

@@ -34,17 +34,37 @@ impl App {
         let entry: Entry = Entry::new(loader).map_err(
             |b| anyhow!("{}", b))?;
         let mut data: AppData = AppData::default();
+        
+        // 1. create instance
         let instance: Instance = instance::create_instance(window, &entry, &mut data)?;
         data.surface = vk_window::create_surface(&instance, &window, &window)?;
+        
+        // 2. query physical device
+        // get QueueFamilyIndices, SwapchainSupport
         physical_device::pick_physical_device(&instance, &mut data)?;
+        
+        // 3. create logical device
+        // QueueFamilyIndices -> create -> graphics_queue, present_queue
         let device: Device = logical_device::create_logical_device(&entry, &instance, &mut data)?;
+        
+        // 4. create swapchain
         swapchain::create_swapchain(window, &instance, &device, &mut data)?;
+        // swapchain_image -> swapchain_image_views
         swapchain::create_swapchain_image_views(&device, &mut data)?;
+        
+        // 5. create pipeline
         pipeline::create_render_pass(&instance, &device, &mut data)?;
         pipeline::create_pipeline(&device, &mut data)?;
+        
+        // 6. create framebuffers
+        // swapchain_image_view -> framebuffer
         framebuffers::create_framebuffers(&device, &mut data)?;
+        
+        // 7. create command pool and buffers
         command_pool::create_command_pool(&instance, &device, &mut data)?;
         command_buffers::create_command_buffers(&device, &mut data)?;
+        
+        // 8. create sync
         sync_objects::create_sync_objects(&device, &mut data)?;
 
         Ok(Self { 
@@ -58,6 +78,7 @@ impl App {
 
     /// Renders a frame for our Vulkan app.
     pub unsafe fn render(&mut self, window: &Window) -> Result<()> {
+        // Get semaphore and wait
         let in_flight_fence = self.data.in_flight_fences[self.frame];
 
         self.device.wait_for_fences(
@@ -66,8 +87,8 @@ impl App {
             u64::max_value()
         )?;
 
-        let image_index = self
-            .device
+        // Get image from swapchain
+        let image_index = self.device
             .acquire_next_image_khr(
                 self.data.swapchain,
                 u64::max_value(),
@@ -87,6 +108,7 @@ impl App {
 
         self.data.images_in_flight[image_index] = in_flight_fence;
 
+        // Commit command buffer
         let wait_semaphores = &[self.data.image_available_semaphores[self.frame]];
         let wait_stages = &[vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT];
         let command_buffers = &[self.data.command_buffers[image_index]];
@@ -99,12 +121,14 @@ impl App {
 
         self.device.reset_fences(&[in_flight_fence])?;
 
+        // Submit drawing commands to the graphics queue
         self.device.queue_submit(
             self.data.graphics_queue, 
             &[submit_info], 
             in_flight_fence
         )?;
 
+        // Present
         let swapchains = &[self.data.swapchain];
         let image_indices = &[image_index as u32];
         let present_info = vk::PresentInfoKHR::builder()
@@ -114,6 +138,7 @@ impl App {
 
         self.device.queue_present_khr(self.data.present_queue, &present_info)?;
 
+        // Update current frame index
         self.frame = (self.frame + 1) % MAX_FRAMES_IN_FLIGHT;
 
         Ok(())

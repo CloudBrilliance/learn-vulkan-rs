@@ -11,8 +11,11 @@ pub unsafe fn create_swapchain(window: &Window, instance: &Instance, device: &De
     let indices = QueueFamilyIndices::get(instance, data, data.physical_device)?;
     let support = SwapchainSupport::get(instance, data, data.physical_device)?;
 
+    // 表面格式（颜色深度）
     let surface_format = get_swapchain_surface_format(&support.formats);
+    // 呈现模式（将图像“交换”到屏幕的条件）
     let present_mode = get_swapchain_present_mode(&support.present_modes);
+    // 交换范围（swap extent）（交换链中图像的分辨率）
     let extent = get_swapchain_extent(window, support.capabilities);
 
     data.swapchain_format = surface_format.format;
@@ -51,7 +54,7 @@ pub unsafe fn create_swapchain(window: &Window, instance: &Instance, device: &De
 
     data.swapchain = device.create_swapchain_khr(&info, None)?;
 
-    // Images
+    // Images (get swapchain image)
     data.swapchain_images = device.get_swapchain_images_khr(data.swapchain)?;
 
     Ok(())

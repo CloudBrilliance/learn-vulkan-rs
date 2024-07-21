@@ -34,13 +34,19 @@ impl App {
         let mut data: AppData = AppData::default();
         let instance: Instance = instance::create_instance(window, &entry, &mut data)?;
         
-        // surface
+        // create surface
         data.surface = vk_window::create_surface(&instance, &window, &window)?;
         
+        // add querying presentation support in QueueFamilyIndices::get
+        // check swapchain support
         physical_device::pick_physical_device(&instance, &mut data)?;
+
+        // create present queue
+        // enable device extensions
         let device: Device = logical_device::create_logical_device(&entry, &instance, &mut data)?;
 
-        // swapchain
+        // create swapchain
+        // get swapchain images
         swapchain::create_swapchain(window, &instance, &device, &mut data)?;
 
         Ok(Self { entry, instance, data, device })
