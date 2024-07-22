@@ -33,3 +33,7 @@ Drawing
 - demo_11: Command buffers
 
 - demo_12: Rendering and presentation (triangle)
+
+Swapchain
+
+- demo_13: Swapchain Recreation
