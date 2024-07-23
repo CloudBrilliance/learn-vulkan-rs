@@ -454,6 +454,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "demo_15"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "cgmath",
+ "log",
+ "pretty_env_logger",
+ "thiserror",
+ "vulkanalia",
+ "winit",
+]
+
+[[package]]
+name = "demo_16"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "cgmath",
+ "log",
+ "pretty_env_logger",
+ "thiserror",
+ "vulkanalia",
+ "winit",
+]
+
+[[package]]
 name = "dispatch"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"

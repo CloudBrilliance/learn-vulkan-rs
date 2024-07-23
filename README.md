@@ -40,4 +40,8 @@ Swapchain
 
 Vertex buffers
 
-- demo_14: Vertex buffer creation
+- demo_14: Vertex buffer
+
+- demo_15: Stage buffer
+
+- demo_16: Index buffer
