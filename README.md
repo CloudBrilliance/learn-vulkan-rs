@@ -45,3 +45,7 @@ Vertex buffers
 - demo_15: Stage buffer
 
 - demo_16: Index buffer
+
+Uniform Buffers
+
+- demo_17: Uniform buffer
