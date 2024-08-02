@@ -57,3 +57,5 @@ Texture
 Model
 
 - demo_19: Depth buffering
+
+- demo_20: Loading models
