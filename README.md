@@ -65,3 +65,7 @@ Rendering quality
 - demo_21: Generating mipmaps
 
 - demo_22: Multisampling
+
+Dynamic scenes
+
+- demo_23: Push constants
