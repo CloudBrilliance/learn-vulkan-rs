@@ -63,3 +63,5 @@ Model
 Rendering quality
 
 - demo_21: Generating mipmaps
+
+- demo_22: Multisampling
