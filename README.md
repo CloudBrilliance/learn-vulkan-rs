@@ -69,3 +69,5 @@ Rendering quality
 Dynamic scenes
 
 - demo_23: Push constants
+
+- demo_24: Recycling command buffers
