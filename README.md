@@ -71,3 +71,5 @@ Dynamic scenes
 - demo_23: Push constants
 
 - demo_24: Recycling command buffers
+
+- demo_25: Secondary command buffers
